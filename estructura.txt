@@ -1,0 +1,528 @@
+﻿Raices
++---backend
+|   +---app
+|   |   +---Console
+|   |   |   \---Commands
+|   |   |       \---ActualizarEstadosPedidos.php
+|   |   +---Http
+|   |   |   +---Controllers
+|   |   |   |   +---AdminPedidoController.php
+|   |   |   |   +---ArtesanoController.php
+|   |   |   |   +---AuthController.php
+|   |   |   |   +---Controller.php
+|   |   |   |   +---ExperienciaController.php
+|   |   |   |   +---MensajeController.php
+|   |   |   |   +---PedidoController.php
+|   |   |   |   +---ProductoController.php
+|   |   |   |   +---ResenaController.php
+|   |   |   |   \---VideoController.php
+|   |   |   \---Middleware
+|   |   |       \---EnsureUserIsAdmin.php
+|   |   +---Mail
+|   |   |   +---EstadoPedidoActualizado.php
+|   |   |   +---PedidoCreado.php
+|   |   |   \---PedidoCreadoMail.php
+|   |   +---Models
+|   |   |   +---Actividad.php
+|   |   |   +---Artesano.php
+|   |   |   +---Experiencia.php
+|   |   |   +---Mensaje.php
+|   |   |   +---Pago.php
+|   |   |   +---Pedido.php
+|   |   |   +---PedidoDetalle.php
+|   |   |   +---Producto.php
+|   |   |   +---Resena.php
+|   |   |   +---ReservaExperiencia.php
+|   |   |   +---User.php
+|   |   |   \---Video.php
+|   |   \---Providers
+|   |       \---AppServiceProvider.php
+|   +---bootstrap
+|   |   +---cache
+|   |   |   +---.gitignore
+|   |   |   +---packages.php
+|   |   |   \---services.php
+|   |   +---app.php
+|   |   \---providers.php
+|   +---config
+|   |   +---app.php
+|   |   +---auth.php
+|   |   +---cache.php
+|   |   +---database.php
+|   |   +---filesystems.php
+|   |   +---logging.php
+|   |   +---mail.php
+|   |   +---queue.php
+|   |   +---sanctum.php
+|   |   +---services.php
+|   |   \---session.php
+|   +---database
+|   |   +---factories
+|   |   |   \---UserFactory.php
+|   |   +---migrations
+|   |   |   +---0001_01_01_000000_create_users_table.php
+|   |   |   +---0001_01_01_000001_create_cache_table.php
+|   |   |   +---0001_01_01_000002_create_jobs_table.php
+|   |   |   +---2026_08_29_015759_create_personal_access_tokens_table.php
+|   |   |   +---2026_08_29_044345_create_password_reset_tokens_table.php
+|   |   |   +---2026_09_01_234144_add_role_to_users_table.php
+|   |   |   +---2026_09_02_222223_create_productos_table.php
+|   |   |   +---2026_09_04_185928_create_pedidos_table.php
+|   |   |   +---2026_09_04_185929_create_pedido_detalles_table.php
+|   |   |   +---2026_09_07_205142_add_imagen_to_pedido_detalles_table.php
+|   |   |   +---2026_09_09_111023_make_imagen_unique_in_productos_table.php
+|   |   |   +---2026_09_09_151052_create_actividads_table.php
+|   |   |   +---2026_09_11_192340_create_videos_table.php
+|   |   |   +---2026_09_11_193120_create_artesanos_table.php
+|   |   |   +---2026_09_11_195428_create_experiencias_table.php
+|   |   |   +---2026_09_11_195432_create_reserva_experiencias_table.php
+|   |   |   +---2026_09_13_210934_add_telefono_and_documento_to_users_table.php
+|   |   |   +---2026_09_14_204442_add_checkout_fields_to_pedidos_table.php
+|   |   |   +---2026_09_14_204742_create_pagos_table.php
+|   |   |   \---2026_09_15_085455_create_resenas_table.php
+|   |   +---seeders
+|   |   |   +---ArtesanoSeeder.php
+|   |   |   +---DatabaseSeeder.php
+|   |   |   +---ExperienciaSeeder.php
+|   |   |   +---ProductoSeeder.php
+|   |   |   \---VideoSeeder.php
+|   |   \---.gitignore
+|   +---public
+|   |   +---build
+|   |   |   +---assets
+|   |   |   |   +---app-BvRk9kiK.js
+|   |   |   |   +---app-DeotPA1P.css
+|   |   |   |   +---fonts-C9MNnjVw.css
+|   |   |   |   +---instrument-sans-400-normal-D1W7dsQl.woff
+|   |   |   |   +---instrument-sans-400-normal-DRC__1Mx.woff2
+|   |   |   |   +---instrument-sans-500-normal-Dk9ku72i.woff2
+|   |   |   |   +---instrument-sans-500-normal-Z6ESRlEs.woff
+|   |   |   |   +---instrument-sans-600-normal-B7fBEWYG.woff2
+|   |   |   |   \---instrument-sans-600-normal-B9e8oLYv.woff
+|   |   |   +---fonts-manifest.json
+|   |   |   \---manifest.json
+|   |   +---storage
+|   |   |   +---productos
+|   |   |   |   +---6add0cfb68c4a8f28024d5cbd34e42beab94f1cf0b635ca57ab502c53807e63e.png
+|   |   |   |   +---nNtK035FGgkUgD6PkL9cVl5TM2OPmBEmfjy6hNtH.png
+|   |   |   |   +---raices-10-centro-de-mesa-monta-na.svg
+|   |   |   |   +---raices-11-bandeja-bosque-vivo.svg
+|   |   |   |   +---raices-12-cuenco-roble-de-la-sierra.svg
+|   |   |   |   +---raices-13-tabla-cosecha-colombiana.svg
+|   |   |   |   +---raices-14-cofre-secretos-del-bosque.svg
+|   |   |   |   +---raices-15-escultura-esp-iritu-del-jaguar.svg
+|   |   |   |   +---raices-16-portavelas-noche-andina.svg
+|   |   |   |   +---raices-17-organizador-ra-iz-natural.svg
+|   |   |   |   +---raices-18-marco-caminos-de-colombia.svg
+|   |   |   |   +---raices-19-mortero-sabores-de-la-tierra.svg
+|   |   |   |   +---raices-1-jarr-on-tierra-andina.svg
+|   |   |   |   +---raices-20-caja-caf-e-de-monta-na.svg
+|   |   |   |   +---raices-21-mochila-amanecer-wayuu.svg
+|   |   |   |   +---raices-22-bolso-caminos-del-caribe.svg
+|   |   |   |   +---raices-23-tapiz-monta-nas-vivas.svg
+|   |   |   |   +---raices-24-camino-de-mesa-tierra.svg
+|   |   |   |   +---raices-25-coj-in-selva-colombiana.svg
+|   |   |   |   +---raices-26-chal-luna-de-monta-na.svg
+|   |   |   |   +---raices-27-bufanda-niebla-andina.svg
+|   |   |   |   +---raices-28-canasto-tejido-palma-dorada.svg
+|   |   |   |   +---raices-29-cesta-hogar-ra-ices.svg
+|   |   |   |   +---raices-2-taza-brisa-de-monta-na.svg
+|   |   |   |   +---raices-30-atrapasue-nos-canto-del-viento.svg
+|   |   |   |   +---raices-31-canasto-fique-de-monta-na.svg
+|   |   |   |   +---raices-32-cesta-palma-del-caribe.svg
+|   |   |   |   +---raices-33-bolso-fibras-del-valle.svg
+|   |   |   |   +---raices-34-portavasos-fique-natural.svg
+|   |   |   |   +---raices-35-bandeja-palma-silvestre.svg
+|   |   |   |   +---raices-36-panera-cosecha-natural.svg
+|   |   |   |   +---raices-37-frutero-ra-ices-del-campo.svg
+|   |   |   |   +---raices-38-organizador-fique-dorado.svg
+|   |   |   |   +---raices-39-canasta-cosecha-caribe.svg
+|   |   |   |   +---raices-3-cuenco-amanecer.svg
+|   |   |   |   +---raices-40-l-ampara-fibra-de-luna.svg
+|   |   |   |   +---raices-41-collar-semillas-del-bosque.svg
+|   |   |   |   +---raices-42-pulsera-caminos-de-tierra.svg
+|   |   |   |   +---raices-43-aretes-sol-del-caribe.svg
+|   |   |   |   +---raices-44-aretes-flor-de-monta-na.svg
+|   |   |   |   +---raices-45-pulsera-fuego-andino.svg
+|   |   |   |   +---raices-46-collar-luna-de-semillas.svg
+|   |   |   |   +---raices-47-peineta-flores-del-campo.svg
+|   |   |   |   +---raices-48-broche-jard-in-colombiano.svg
+|   |   |   |   +---raices-49-llaveros-caminos-de-colombia.svg
+|   |   |   |   +---raices-4-plato-ra-ices-del-valle.svg
+|   |   |   |   +---raices-50-pulsera-r-io-de-monta-na.svg
+|   |   |   |   +---raices-51-escultura-guardi-an-del-bosque.svg
+|   |   |   |   +---raices-52-figura-colibr-i-de-la-sierra.svg
+|   |   |   |   +---raices-53-m-ascara-esp-iritu-del-caribe.svg
+|   |   |   |   +---raices-54-farol-noche-de-pueblo.svg
+|   |   |   |   +---raices-55-campana-viento-de-monta-na.svg
+|   |   |   |   +---raices-56-m-ovil-canto-de-aves.svg
+|   |   |   |   +---raices-57-espejo-camino-andino.svg
+|   |   |   |   +---raices-58-cuadro-paisaje-cafetero.svg
+|   |   |   |   +---raices-59-adorno-flor-tropical.svg
+|   |   |   |   +---raices-5-florero-canto-de-barro.svg
+|   |   |   |   +---raices-60-centro-decorativo-selva.svg
+|   |   |   |   +---raices-61-set-mesa-tierra-colombiana.svg
+|   |   |   |   +---raices-62-set-cocina-sabores-de-ra-iz.svg
+|   |   |   |   +---raices-63-cucharas-madera-del-bosque.svg
+|   |   |   |   +---raices-64-esp-atula-cosecha-andina.svg
+|   |   |   |   +---raices-65-tabla-servir-amanecer.svg
+|   |   |   |   +---raices-66-salvamanteles-fibras-del-campo.svg
+|   |   |   |   +---raices-67-portavelas-noche-caribe.svg
+|   |   |   |   +---raices-68-bandeja-desayuno-andino.svg
+|   |   |   |   +---raices-69-organizador-esencia-natural.svg
+|   |   |   |   +---raices-6-maceta-selva-viva.svg
+|   |   |   |   +---raices-70-frutero-madera-de-monta-na.svg
+|   |   |   |   +---raices-71-jaguar-esp-iritu-de-colombia.svg
+|   |   |   |   +---raices-72-c-ondor-guardi-an-de-los-andes.svg
+|   |   |   |   +---raices-73-colibr-i-coraz-on-de-selva.svg
+|   |   |   |   +---raices-74-atardecer-sobre-el-valle.svg
+|   |   |   |   +---raices-75-memoria-de-los-abuelos.svg
+|   |   |   |   +---raices-76-guardianes-de-la-monta-na.svg
+|   |   |   |   +---raices-77-caminos-de-nuestra-tierra.svg
+|   |   |   |   +---raices-78-coraz-on-de-fique.svg
+|   |   |   |   +---raices-79-ra-ices-del-caribe.svg
+|   |   |   |   +---raices-7-jarra-agua-de-monta-na.svg
+|   |   |   |   +---raices-80-alma-de-la-selva.svg
+|   |   |   |   +---raices-8-copa-barro-dorado.svg
+|   |   |   |   \---raices-9-vasija-guardianes-de-tierra.svg
+|   |   |   \---.gitignore
+|   |   +---.htaccess
+|   |   +---favicon.ico
+|   |   +---index.php
+|   |   \---robots.txt
+|   +---resources
+|   |   +---css
+|   |   |   \---app.css
+|   |   +---js
+|   |   |   \---app.js
+|   |   \---views
+|   |       +---auth
+|   |       |   \---login.blade.php
+|   |       +---emails
+|   |       |   +---pedidos
+|   |       |   |   +---creado.blade.php
+|   |       |   |   \---estado-actualizado.blade.php
+|   |       |   \---pedido-creado.blade.php
+|   |       \---welcome.blade.php
+|   +---routes
+|   |   +---api.php
+|   |   +---console.php
+|   |   \---web.php
+|   +---src
+|   |   \---utils
+|   |       \---validaciones.js
+|   +---storage
+|   |   +---app
+|   |   |   +---private
+|   |   |   |   \---.gitignore
+|   |   |   +---public
+|   |   |   |   +---productos
+|   |   |   |   |   +---6add0cfb68c4a8f28024d5cbd34e42beab94f1cf0b635ca57ab502c53807e63e.png
+|   |   |   |   |   +---nNtK035FGgkUgD6PkL9cVl5TM2OPmBEmfjy6hNtH.png
+|   |   |   |   |   +---raices-10-centro-de-mesa-monta-na.svg
+|   |   |   |   |   +---raices-11-bandeja-bosque-vivo.svg
+|   |   |   |   |   +---raices-12-cuenco-roble-de-la-sierra.svg
+|   |   |   |   |   +---raices-13-tabla-cosecha-colombiana.svg
+|   |   |   |   |   +---raices-14-cofre-secretos-del-bosque.svg
+|   |   |   |   |   +---raices-15-escultura-esp-iritu-del-jaguar.svg
+|   |   |   |   |   +---raices-16-portavelas-noche-andina.svg
+|   |   |   |   |   +---raices-17-organizador-ra-iz-natural.svg
+|   |   |   |   |   +---raices-18-marco-caminos-de-colombia.svg
+|   |   |   |   |   +---raices-19-mortero-sabores-de-la-tierra.svg
+|   |   |   |   |   +---raices-1-jarr-on-tierra-andina.svg
+|   |   |   |   |   +---raices-20-caja-caf-e-de-monta-na.svg
+|   |   |   |   |   +---raices-21-mochila-amanecer-wayuu.svg
+|   |   |   |   |   +---raices-22-bolso-caminos-del-caribe.svg
+|   |   |   |   |   +---raices-23-tapiz-monta-nas-vivas.svg
+|   |   |   |   |   +---raices-24-camino-de-mesa-tierra.svg
+|   |   |   |   |   +---raices-25-coj-in-selva-colombiana.svg
+|   |   |   |   |   +---raices-26-chal-luna-de-monta-na.svg
+|   |   |   |   |   +---raices-27-bufanda-niebla-andina.svg
+|   |   |   |   |   +---raices-28-canasto-tejido-palma-dorada.svg
+|   |   |   |   |   +---raices-29-cesta-hogar-ra-ices.svg
+|   |   |   |   |   +---raices-2-taza-brisa-de-monta-na.svg
+|   |   |   |   |   +---raices-30-atrapasue-nos-canto-del-viento.svg
+|   |   |   |   |   +---raices-31-canasto-fique-de-monta-na.svg
+|   |   |   |   |   +---raices-32-cesta-palma-del-caribe.svg
+|   |   |   |   |   +---raices-33-bolso-fibras-del-valle.svg
+|   |   |   |   |   +---raices-34-portavasos-fique-natural.svg
+|   |   |   |   |   +---raices-35-bandeja-palma-silvestre.svg
+|   |   |   |   |   +---raices-36-panera-cosecha-natural.svg
+|   |   |   |   |   +---raices-37-frutero-ra-ices-del-campo.svg
+|   |   |   |   |   +---raices-38-organizador-fique-dorado.svg
+|   |   |   |   |   +---raices-39-canasta-cosecha-caribe.svg
+|   |   |   |   |   +---raices-3-cuenco-amanecer.svg
+|   |   |   |   |   +---raices-40-l-ampara-fibra-de-luna.svg
+|   |   |   |   |   +---raices-41-collar-semillas-del-bosque.svg
+|   |   |   |   |   +---raices-42-pulsera-caminos-de-tierra.svg
+|   |   |   |   |   +---raices-43-aretes-sol-del-caribe.svg
+|   |   |   |   |   +---raices-44-aretes-flor-de-monta-na.svg
+|   |   |   |   |   +---raices-45-pulsera-fuego-andino.svg
+|   |   |   |   |   +---raices-46-collar-luna-de-semillas.svg
+|   |   |   |   |   +---raices-47-peineta-flores-del-campo.svg
+|   |   |   |   |   +---raices-48-broche-jard-in-colombiano.svg
+|   |   |   |   |   +---raices-49-llaveros-caminos-de-colombia.svg
+|   |   |   |   |   +---raices-4-plato-ra-ices-del-valle.svg
+|   |   |   |   |   +---raices-50-pulsera-r-io-de-monta-na.svg
+|   |   |   |   |   +---raices-51-escultura-guardi-an-del-bosque.svg
+|   |   |   |   |   +---raices-52-figura-colibr-i-de-la-sierra.svg
+|   |   |   |   |   +---raices-53-m-ascara-esp-iritu-del-caribe.svg
+|   |   |   |   |   +---raices-54-farol-noche-de-pueblo.svg
+|   |   |   |   |   +---raices-55-campana-viento-de-monta-na.svg
+|   |   |   |   |   +---raices-56-m-ovil-canto-de-aves.svg
+|   |   |   |   |   +---raices-57-espejo-camino-andino.svg
+|   |   |   |   |   +---raices-58-cuadro-paisaje-cafetero.svg
+|   |   |   |   |   +---raices-59-adorno-flor-tropical.svg
+|   |   |   |   |   +---raices-5-florero-canto-de-barro.svg
+|   |   |   |   |   +---raices-60-centro-decorativo-selva.svg
+|   |   |   |   |   +---raices-61-set-mesa-tierra-colombiana.svg
+|   |   |   |   |   +---raices-62-set-cocina-sabores-de-ra-iz.svg
+|   |   |   |   |   +---raices-63-cucharas-madera-del-bosque.svg
+|   |   |   |   |   +---raices-64-esp-atula-cosecha-andina.svg
+|   |   |   |   |   +---raices-65-tabla-servir-amanecer.svg
+|   |   |   |   |   +---raices-66-salvamanteles-fibras-del-campo.svg
+|   |   |   |   |   +---raices-67-portavelas-noche-caribe.svg
+|   |   |   |   |   +---raices-68-bandeja-desayuno-andino.svg
+|   |   |   |   |   +---raices-69-organizador-esencia-natural.svg
+|   |   |   |   |   +---raices-6-maceta-selva-viva.svg
+|   |   |   |   |   +---raices-70-frutero-madera-de-monta-na.svg
+|   |   |   |   |   +---raices-71-jaguar-esp-iritu-de-colombia.svg
+|   |   |   |   |   +---raices-72-c-ondor-guardi-an-de-los-andes.svg
+|   |   |   |   |   +---raices-73-colibr-i-coraz-on-de-selva.svg
+|   |   |   |   |   +---raices-74-atardecer-sobre-el-valle.svg
+|   |   |   |   |   +---raices-75-memoria-de-los-abuelos.svg
+|   |   |   |   |   +---raices-76-guardianes-de-la-monta-na.svg
+|   |   |   |   |   +---raices-77-caminos-de-nuestra-tierra.svg
+|   |   |   |   |   +---raices-78-coraz-on-de-fique.svg
+|   |   |   |   |   +---raices-79-ra-ices-del-caribe.svg
+|   |   |   |   |   +---raices-7-jarra-agua-de-monta-na.svg
+|   |   |   |   |   +---raices-80-alma-de-la-selva.svg
+|   |   |   |   |   +---raices-8-copa-barro-dorado.svg
+|   |   |   |   |   \---raices-9-vasija-guardianes-de-tierra.svg
+|   |   |   |   \---.gitignore
+|   |   |   \---.gitignore
+|   |   +---framework
+|   |   |   +---cache
+|   |   |   |   +---data
+|   |   |   |   |   \---.gitignore
+|   |   |   |   \---.gitignore
+|   |   |   +---sessions
+|   |   |   |   \---.gitignore
+|   |   |   +---testing
+|   |   |   |   \---.gitignore
+|   |   |   +---views
+|   |   |   |   \---.gitignore
+|   |   |   \---.gitignore
+|   |   \---logs
+|   |       +---.gitignore
+|   |       \---laravel.log
+|   +---tests
+|   |   +---Feature
+|   |   |   \---ExampleTest.php
+|   |   +---Unit
+|   |   |   \---ExampleTest.php
+|   |   \---TestCase.php
+|   +---$pedidos
+|   +---.editorconfig
+|   +---.env
+|   +---.env.example
+|   +---.gitattributes
+|   +---.gitignore
+|   +---.npmrc
+|   +---[
+|   +---artisan
+|   +---'boolean'
+|   +---cascadeOnDelete()
+|   +---composer
+|   +---composer.json
+|   +---composer.lock
+|   +---constrained('users')
+|   +---create([
+|   +---createToken('auth-token')
+|   +---'decimal
+|   +---decimal('total'
+|   +---decrement(
+|   +---default('pendiente')
+|   +---file('comprobante_pago')
+|   +---first()
+|   +---foreignId('user_id')
+|   +---get()
+|   +---group(function
+|   +---hasFile(
+|   +---id
+|   +---id()
+|   +---'integer'
+|   +---json(
+|   +---json([
+|   +---latest()
+|   +---load([
+|   +---lockForUpdate()
+|   +---nullable()
+|   +---package.json
+|   +---package-lock.json
+|   +---pedido
+|   +---php
+|   +---phpunit.xml
+|   +---pnpm-lock.yaml
+|   +---README.md
+|   +---stock
+|   +---store(
+|   +---timestamps()
+|   +---type
+|   +---user()
+|   +---user_id
+|   +---validaciones.js
+|   +---validate([
+|   +---vite.config.js
+|   \---where(
++---frontend
+|   +---public
+|   |   +---favicon.svg
+|   |   +---icons.svg
+|   |   \---logo-raices.png
+|   +---src
+|   |   +---assets
+|   |   |   +---hero.png
+|   |   |   +---react.svg
+|   |   |   \---vite.svg
+|   |   +---components
+|   |   |   +---cards
+|   |   |   |   +---ArtesanoCard.jsx
+|   |   |   |   +---CategoriaCard.jsx
+|   |   |   |   \---ProductoCard.jsx
+|   |   |   +---common
+|   |   |   |   +---Footer.jsx
+|   |   |   |   +---Hero.jsx
+|   |   |   |   \---SectionTitle.jsx
+|   |   |   +---Intro
+|   |   |   |   +---Intro.css
+|   |   |   |   \---Intro.jsx
+|   |   |   +---navbar
+|   |   |   |   \---Navbar.jsx
+|   |   |   +---resenas
+|   |   |   |   \---SeccionResenas.jsx
+|   |   |   +---ChatArtesano.jsx
+|   |   |   +---Intro.jsx
+|   |   |   +---MapaEnvio.jsx
+|   |   |   +---Navbar.jsx
+|   |   |   \---Reloj.jsx
+|   |   +---context
+|   |   |   \---CarritoContext.jsx
+|   |   +---hooks
+|   |   +---layouts
+|   |   |   \---MainLayout.jsx
+|   |   +---pages
+|   |   |   +---Administrador
+|   |   |   |   +---AdminDashboard.jsx
+|   |   |   |   +---AdminPedidoDetalle.jsx
+|   |   |   |   +---AdminPedidos.jsx
+|   |   |   |   \---AdminProductos.jsx
+|   |   |   +---Artesano
+|   |   |   +---Artesanos
+|   |   |   |   \---PerfilArtesano.jsx
+|   |   |   +---Auth
+|   |   |   |   +---ForgotPassword.jsx
+|   |   |   |   +---Login.jsx
+|   |   |   |   +---RecuperarPassword.jsx
+|   |   |   |   \---Registro.jsx
+|   |   |   +---Carrito
+|   |   |   |   \---Carrito.jsx
+|   |   |   +---Categorias
+|   |   |   +---Certificados
+|   |   |   +---Checkout
+|   |   |   |   \---Checkout.jsx
+|   |   |   +---Comprador
+|   |   |   +---Emprendedor
+|   |   |   +---Experiencias
+|   |   |   |   \---Experiencias.jsx
+|   |   |   +---Favoritos
+|   |   |   |   \---Favoritos.jsx
+|   |   |   +---Inicio
+|   |   |   |   +---inicio.jsx
+|   |   |   |   \---Intro.jsx
+|   |   |   +---Mapa
+|   |   |   |   +---Mapa.jsx
+|   |   |   |   \---RutaEntrega.jsx
+|   |   |   +---Mensajes
+|   |   |   +---Notificaciones
+|   |   |   +---PedidoDetalle
+|   |   |   |   \---PedidoDetalle.jsx
+|   |   |   +---Pedidos
+|   |   |   |   +---PedidoDetalle.jsx
+|   |   |   |   \---Pedidos.jsx
+|   |   |   +---Perfil
+|   |   |   |   \---Perfil.jsx
+|   |   |   +---Productos
+|   |   |   |   +---DetalleProducto.jsx
+|   |   |   |   \---Productos.jsx
+|   |   |   +---Reportes
+|   |   |   +---Reservas
+|   |   |   +---Checkout.jsx
+|   |   |   +---DetalleProducto.jsx
+|   |   |   +---Productos.jsx
+|   |   |   \---Videos.jsx
+|   |   +---services
+|   |   |   \---api.js
+|   |   +---utils
+|   |   |   \---formatos.js
+|   |   +---App.css
+|   |   +---App.jsx
+|   |   +---App.jsx.backup
+|   |   +---index.css
+|   |   \---main.jsx
+|   +---$pedido
+|   +---$pedidos
+|   +---(
+|   +---({
+|   +---.gitignore
+|   +---.oxlintrc.json
+|   +---[
+|   +---{
+|   +---0
+|   +---0)
+|   +---CrearProducto.jsx
+|   +---d.nombre
+|   +---email
+|   +---estado
+|   +---estadosPermitidos
+|   +---estructura.txt
+|   +---frontend@0.0.0
+|   +---get()
+|   +---index.html
+|   +---item.id
+|   +---json([
+|   +---latest()
+|   +---load([
+|   +---Navbar.jsx
+|   +---npm
+|   +---Number(producto.stock)
+|   +---package.json
+|   +---package-lock.json
+|   +---producto.categoria)
+|   +---r.id
+|   +---README.md
+|   +---response
+|   +---role
+|   +---send(
+|   +---setBusqueda()}
+|   +---setBusqueda(e.target.value)}
+|   +---setDireccion(e.target.value)}
+|   +---setIdiomaVoz(e.target.value)}
+|   +---setObservaciones(e.target.value)}
+|   +---setRutaElegida(r.id)}
+|   +---setRutaElegida(ruta.id))
+|   +---setTelefono(e.target.value)}
+|   +---update([
+|   +---validate([
+|   +---verificarAdmin(
+|   +---vite
+|   \---vite.config.js
++---src
+|   +---components
+|   |   +---Checkout.jsx
+|   |   +---Home.jsx
+|   |   +---Login.jsx
+|   |   \---Navbar.jsx
+|   \---utils
+|       \---validaciones.js
+\---type

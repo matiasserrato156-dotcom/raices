@@ -6,7 +6,7 @@ const validarCorreo = (email) => {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 };
 
-export default function Registro() {
+function Registro() {
   const navigate = useNavigate();
 
   const [formulario, setFormulario] = useState({
@@ -16,6 +16,7 @@ export default function Registro() {
     document: "",
     password: "",
     password_confirmation: "",
+    role: "comprador",
   });
 
   const [error, setError] = useState("");
@@ -60,6 +61,11 @@ export default function Registro() {
       return;
     }
 
+    if (!formulario.role) {
+      setError("Selecciona un tipo de usuario.");
+      return;
+    }
+
     if (formulario.password.length < 8) {
       setError("La contraseña debe tener mínimo 8 caracteres.");
       return;
@@ -86,6 +92,7 @@ export default function Registro() {
         document: "",
         password: "",
         password_confirmation: "",
+        role: "comprador",
       });
 
       setTimeout(() => {
@@ -252,6 +259,25 @@ export default function Registro() {
 
           <div className="mb-3">
             <label className="form-label fw-semibold text-secondary small">
+              Tipo de usuario
+            </label>
+
+            <select
+              name="role"
+              className="form-select"
+              value={formulario.role}
+              onChange={manejarCambio}
+              required
+            >
+              <option value="comprador">Comprador</option>
+              <option value="artesano">Artesano</option>
+              <option value="emprendedor">Emprendedor</option>
+              <option value="aprendiz">Aprendiz</option>
+            </select>
+          </div>
+
+          <div className="mb-3">
+            <label className="form-label fw-semibold text-secondary small">
               Contraseña
             </label>
 
@@ -314,3 +340,4 @@ export default function Registro() {
   );
 }
 
+export default Registro;
