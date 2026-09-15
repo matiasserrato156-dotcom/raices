@@ -1,0 +1,271 @@
+.raices-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0) 45%
+    ),
+    linear-gradient(
+      135deg,
+      #173f2b 0%,
+      #245c3d 45%,
+      #3f7149 100%
+    );
+
+  animation: raicesIntroAppear 0.7s ease-out;
+}
+
+.raices-intro-background {
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(255, 255, 255, 0.08) 0 2px,
+      transparent 3px
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(224, 196, 133, 0.08) 0 2px,
+      transparent 3px
+    );
+
+  background-size: 45px 45px, 65px 65px;
+
+  opacity: 0.8;
+}
+
+.raices-intro-content {
+  position: relative;
+  z-index: 2;
+
+  width: min(90%, 520px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  animation: raicesIntroContent 1.2s ease-out;
+}
+
+.raices-intro-logo-wrapper {
+  width: min(72vw, 330px);
+  height: min(72vw, 330px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255, 255, 255, 0.97);
+
+  border-radius: 50%;
+
+  padding: 22px;
+
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.25),
+    0 0 0 8px rgba(224, 196, 133, 0.18);
+
+  animation:
+    raicesLogoAppear 1.1s ease-out,
+    raicesLogoFloat 3s ease-in-out infinite;
+}
+
+.raices-intro-logo {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  border-radius: 50%;
+}
+
+.raices-intro-text {
+  margin-top: 25px;
+
+  color: #fff;
+
+  animation: raicesTextAppear 1.5s ease-out;
+}
+
+.raices-intro-text h1 {
+  margin: 0;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: clamp(2.2rem, 8vw, 4rem);
+
+  font-weight: 700;
+
+  letter-spacing: 0.18em;
+
+  color: #f7f1df;
+
+  text-shadow:
+    0 3px 15px rgba(0, 0, 0, 0.25);
+}
+
+.raices-intro-text p {
+  margin: 8px 0 0;
+
+  font-size: clamp(0.95rem, 3vw, 1.2rem);
+
+  font-weight: 500;
+
+  letter-spacing: 0.12em;
+
+  color: #e8d8ae;
+}
+
+.raices-intro-text p span {
+  margin: 0 8px;
+  color: #d7bd78;
+}
+
+.raices-intro-line {
+  width: 90px;
+  height: 2px;
+
+  margin: 18px auto 12px;
+
+  background: #d7bd78;
+
+  border-radius: 20px;
+}
+
+.raices-intro-text small {
+  display: block;
+
+  font-size: 0.75rem;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.raices-intro-leaves {
+  position: absolute;
+  z-index: 1;
+
+  color: rgba(215, 189, 120, 0.16);
+
+  font-family: Georgia, serif;
+
+  pointer-events: none;
+}
+
+.raices-leaf-1 {
+  left: 7%;
+  bottom: 10%;
+
+  font-size: 12rem;
+
+  transform: rotate(-25deg);
+}
+
+.raices-leaf-2 {
+  right: 5%;
+  top: 8%;
+
+  font-size: 10rem;
+
+  transform: rotate(155deg);
+}
+
+@keyframes raicesIntroAppear {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes raicesIntroContent {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes raicesLogoAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.65);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes raicesLogoFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes raicesTextAppear {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 576px) {
+  .raices-intro-logo-wrapper {
+    width: 250px;
+    height: 250px;
+    padding: 16px;
+  }
+
+  .raices-intro-text h1 {
+    font-size: 2.2rem;
+  }
+
+  .raices-intro-text p {
+    font-size: 0.85rem;
+  }
+
+  .raices-intro-text small {
+    font-size: 0.62rem;
+  }
+
+  .raices-leaf-1 {
+    font-size: 7rem;
+  }
+
+  .raices-leaf-2 {
+    font-size: 6rem;
+  }
+}

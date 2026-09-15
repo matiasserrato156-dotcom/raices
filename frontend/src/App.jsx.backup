@@ -1,0 +1,201 @@
+﻿import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+// Layout
+import MainLayout from "./layouts/MainLayout";
+
+// PÃ¡ginas
+import Inicio from "./pages/Inicio/inicio";
+import Login from "./pages/Auth/Login";
+import Registro from "./pages/Auth/Registro";`r`nimport ProductosPage from "./pages/Productos/Productos";
+import RecuperarPassword from "./pages/Auth/RecuperarPassword";
+import Perfil from "./pages/Perfil/Perfil";
+
+// PÃ¡gina temporal de recuperaciÃ³n
+function RecuperarPasswordInicio() {
+  return <RecuperarPassword />;
+}
+
+// PÃ¡ginas temporales
+function Productos() {
+  return (
+    <div className="container py-5">
+      <h1>Productos</h1>
+      <p>PrÃ³ximamente encontrarÃ¡s nuestras artesanÃ­as.</p>
+    </div>
+  );
+}
+
+function Experiencias() {
+  return (
+    <div className="container py-5">
+      <h1>Experiencias</h1>
+      <p>PrÃ³ximamente encontrarÃ¡s nuestras experiencias culturales.</p>
+    </div>
+  );
+}
+
+function Mapa() {
+  return (
+    <div className="container py-5">
+      <h1>Ubicaciones</h1>
+      <p>PrÃ³ximamente estarÃ¡ disponible nuestro mapa.</p>
+    </div>
+  );
+}
+
+// Comprueba si existe una sesiÃ³n
+function RutaProtegida({ children }) {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
+}
+
+// Evita mostrar Login/Registro si ya hay sesiÃ³n
+function RutaLogin({ children }) {
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <MainLayout>
+        <Routes>
+
+          {/* ========================= */}
+          {/* AUTENTICACIÃ“N              */}
+          {/* ========================= */}
+
+          {/* Login */}
+          <Route
+            path="/login"
+            element={
+              <RutaLogin>
+                <Login />
+              </RutaLogin>
+            }
+          />
+
+          {/* Registro */}
+          <Route
+            path="/registro"
+            element={
+              <RutaLogin>
+                <Registro />
+              </RutaLogin>
+            }
+          />
+
+          {/* ========================= */}
+          {/* RECUPERAR CONTRASEÃ‘A       */}
+          {/* ========================= */}
+
+          {/* Usuario solicita recuperaciÃ³n */}
+          <Route
+            path="/recuperar-password"
+            element={
+              <RutaLogin>
+                <RecuperarPasswordInicio />
+              </RutaLogin>
+            }
+          />
+
+          {/* Enlace recibido por correo */}
+          <Route
+            path="/reset-password/:token"
+            element={<RecuperarPassword />}
+          />
+
+          {/* ========================= */}
+          {/* INICIO                     */}
+          {/* ========================= */}
+
+          <Route
+            path="/"
+            element={
+              <RutaProtegida>
+                <Inicio />
+              </RutaProtegida>
+            }
+          />
+
+          {/* ========================= */}
+          {/* PERFIL                     */}
+          {/* ========================= */}
+
+          <Route
+            path="/perfil"
+            element={
+              <RutaProtegida>
+                <Perfil />
+              </RutaProtegida>
+            }
+          />
+
+          {/* ========================= */}
+          {/* PRODUCTOS                  */}
+          {/* ========================= */}
+
+          <Route
+            path="/productos"
+            element={
+              <RutaProtegida>
+                <ProductosPage />
+              </RutaProtegida>
+            }
+          />
+
+          {/* ========================= */}
+          {/* EXPERIENCIAS               */}
+          {/* ========================= */}
+
+          <Route
+            path="/experiencias"
+            element={
+              <RutaProtegida>
+                <Experiencias />
+              </RutaProtegida>
+            }
+          />
+
+          {/* ========================= */}
+          {/* MAPA                       */}
+          {/* ========================= */}
+
+          <Route
+            path="/mapa"
+            element={
+              <RutaProtegida>
+                <Mapa />
+              </RutaProtegida>
+            }
+          />
+
+          {/* ========================= */}
+          {/* RUTA DESCONOCIDA           */}
+          {/* ========================= */}
+
+          <Route
+            path="*"
+            element={<Navigate to="/" replace />}
+          />
+
+        </Routes>
+      </MainLayout>
+    </BrowserRouter>
+  );
+}
+
+export default App;
+
+
+
