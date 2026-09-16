@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: raices-backend
+    env: docker
+    region: oregon
+    plan: free
+    rootDir: backend
+    envVars:
+      - key: APP_DEBUG
+        value: false
