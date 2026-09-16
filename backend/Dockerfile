@@ -1,28 +1,41 @@
 FROM php:8.4-apache
 
-# Instalar dependencias del sistema y extensiones necesarias
 RUN apt-get update && apt-get install -y \
-    libpq-dev \
-    libzip-dev \
-    zip \
-    unzip \
     git \
-    && docker-php-ext-install pdo pdo_pgsql pgsql zip
+    unzip \
+    libzip-dev \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    libpq-dev \
+    && docker-php-ext-install \
+    pdo \
+    pdo_mysql \
+    pdo_pgsql \
+    pgsql \
+    mbstring \
+    exif \
+    pcntl \
+    bcmath \
+    gd \
+    zip \
+    && a2enmod rewrite
 
-# Instalar Composer globalmente
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Copiar el código del proyecto
-COPY . /var/www/html
+WORKDIR /var/www/html
 
-# Instalar dependencias de PHP mediante Composer
+COPY . .
+
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# Apuntar el servidor Apache a la carpeta public de Laravel
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 
-RUN a2enmod rewrite
+EXPOSE 80
 
-WORKDIR /var/www/html
+CMD ["apache2-foreground"]
