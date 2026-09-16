@@ -1,12 +1,10 @@
 services:
   - type: web
     name: raices-backend
-    env: node
+    env: docker
     region: oregon
     plan: free
     rootDir: backend
-    buildCommand: "echo 'No build'"
-    startCommand: "php -S 0.0.0.0:$PORT -t public"
     envVars:
       - key: APP_DEBUG
         value: false
