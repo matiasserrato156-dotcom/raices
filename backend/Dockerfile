@@ -1,5 +1,6 @@
 FROM php:8.4-apache
 
+# Dependencias del sistema y extensiones PHP
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -19,23 +20,44 @@ RUN apt-get update && apt-get install -y \
     bcmath \
     gd \
     zip \
-    && a2enmod rewrite
+    && a2enmod rewrite \
+    && rm -rf /var/lib/apt/lists/*
 
+# Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
+# Directorio de trabajo
 WORKDIR /var/www/html
 
+# Copiar proyecto Laravel
 COPY . .
 
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+# Instalar dependencias PHP
+RUN composer install \
+    --no-dev \
+    --optimize-autoloader \
+    --no-interaction
 
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+# Configurar Apache para Laravel
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 
-ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
+    /etc/apache2/sites-available/*.conf
 
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' \
+    /etc/apache2/apache2.conf
 
+# Permitir que Apache utilice .htaccess
+RUN sed -i 's/AllowOverride None/AllowOverride All/g' \
+    /etc/apache2/apache2.conf
+
+# Permisos de Laravel
+RUN chown -R www-data:www-data \
+    /var/www/html/storage \
+    /var/www/html/bootstrap/cache
+
+# Puerto HTTP
 EXPOSE 80
 
+# Iniciar Apache
 CMD ["apache2-foreground"]
