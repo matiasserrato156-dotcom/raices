@@ -1,8 +1,10 @@
 import axios from "axios";
 
-// Detecta automáticamente si estás en localhost o en la IP de la red local (celular)
-const host = window.location.hostname || "127.0.0.1";
-const baseURL = `http://${host}:8000/api`;
+// En producción usamos el backend de Render.
+// En desarrollo usamos el backend local.
+const baseURL = import.meta.env.PROD
+  ? "https://raices-backend-final.onrender.com/api"
+  : `http://${window.location.hostname || "127.0.0.1"}:8000/api`;
 
 const api = axios.create({
   baseURL: baseURL,
