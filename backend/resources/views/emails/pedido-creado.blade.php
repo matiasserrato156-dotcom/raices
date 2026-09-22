@@ -105,7 +105,106 @@
                     <strong>Teléfono:</strong>
                     {{ $pedido->telefono }}
                 </p>
+
+                <p>
+                    <strong>Método de pago:</strong>
+
+                    @if ($pago && $pago->metodo === 'contraentrega')
+                        Contraentrega
+                    @elseif ($pago && $pago->metodo === 'nequi')
+                        Nequi
+                    @elseif ($pago && $pago->metodo === 'bancolombia')
+                        Bancolombia
+                    @else
+                        No especificado
+                    @endif
+                </p>
             </div>
+
+            {{-- MENSAJE SEGÚN EL MÉTODO DE PAGO --}}
+
+            @if ($pago && $pago->metodo === 'contraentrega')
+
+                <div
+                    style="
+                        background: #fff3cd;
+                        border-left: 5px solid #ffc107;
+                        border-radius: 10px;
+                        padding: 18px;
+                        margin: 25px 0;
+                    "
+                >
+                    <h3 style="margin-top: 0;">
+                        Pago contraentrega
+                    </h3>
+
+                    <p style="margin-bottom: 0;">
+                        Tu pedido fue recibido correctamente.
+                        <strong>
+                            El pago todavía no se ha realizado.
+                        </strong>
+                        El valor de la compra será pagado
+                        al momento de recibir tu pedido.
+                    </p>
+                </div>
+
+            @elseif ($pago && $pago->metodo === 'nequi')
+
+                <div
+                    style="
+                        background: #e7f1ff;
+                        border-left: 5px solid #0d6efd;
+                        border-radius: 10px;
+                        padding: 18px;
+                        margin: 25px 0;
+                    "
+                >
+                    <h3 style="margin-top: 0;">
+                        Pago con Nequi
+                    </h3>
+
+                    <p style="margin-bottom: 0;">
+                        Tu pedido fue recibido correctamente.
+                        El comprobante enviado mediante
+                        <strong>Nequi</strong>
+                        se encuentra
+                        <strong>
+                            pendiente de verificación.
+                        </strong>
+                        Te notificaremos cuando el pago sea
+                        verificado.
+                    </p>
+                </div>
+
+            @elseif ($pago && $pago->metodo === 'bancolombia')
+
+                <div
+                    style="
+                        background: #e7f1ff;
+                        border-left: 5px solid #0d6efd;
+                        border-radius: 10px;
+                        padding: 18px;
+                        margin: 25px 0;
+                    "
+                >
+                    <h3 style="margin-top: 0;">
+                        Pago con Bancolombia
+                    </h3>
+
+                    <p style="margin-bottom: 0;">
+                        Tu pedido fue recibido correctamente.
+                        El comprobante enviado mediante
+                        <strong>Bancolombia</strong>
+                        se encuentra
+                        <strong>
+                            pendiente de verificación.
+                        </strong>
+                        Te notificaremos cuando el pago sea
+                        verificado.
+                    </p>
+                </div>
+
+            @endif
 
             <h3>
                 Productos

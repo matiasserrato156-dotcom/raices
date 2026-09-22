@@ -10,10 +10,12 @@ use Illuminate\Validation\ValidationException;
 
 class ProductoController extends Controller
 {
-    private function verificarAdmin(Request $request)
+    private function verificarPermisos(Request $request)
     {
-        if (!$request->user() || $request->user()->role !== 'admin') {
-            abort(403, 'No tienes permisos de administrador.');
+        $user = $request->user();
+        
+        if (!$user || !in_array($user->role, ['admin', 'emprendedor', 'artesano'])) {
+            abort(403, 'No tienes permisos para gestionar productos.');
         }
     }
 
@@ -24,7 +26,7 @@ class ProductoController extends Controller
 
     public function store(Request $request)
     {
-        $this->verificarAdmin($request);
+        $this->verificarPermisos($request);
 
         $validated = $request->validate([
             'nombre'      => ['required', 'string', 'max:255'],
@@ -84,7 +86,7 @@ class ProductoController extends Controller
 
     public function update(Request $request, Producto $producto)
     {
-        $this->verificarAdmin($request);
+        $this->verificarPermisos($request);
 
         $validated = $request->validate([
             'nombre'      => ['sometimes', 'required', 'string', 'max:255'],
@@ -135,13 +137,12 @@ class ProductoController extends Controller
 
     public function destroy(Request $request, Producto $producto)
     {
-        $this->verificarAdmin($request);
+        $this->verificarPermisos($request);
 
         $nombre = $producto->nombre;
         $id = $producto->id;
 
         try {
-            // Intenta borrado físico si el producto nunca se vendió
             if ($producto->imagen && Storage::disk('public')->exists($producto->imagen)) {
                 Storage::disk('public')->delete($producto->imagen);
             }
@@ -149,7 +150,6 @@ class ProductoController extends Controller
             $producto->delete();
             $mensaje = 'Producto eliminado permanentemente.';
         } catch (\Illuminate\Database\QueryException $e) {
-            // Si tiene pedidos asociados (error 1451/23000), aplica borrado lógico
             $producto->update(['activo' => false]);
             $mensaje = 'El producto tiene ventas registradas, por lo que fue retirado del catálogo para proteger el historial.';
         }

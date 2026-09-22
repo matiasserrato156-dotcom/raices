@@ -60,6 +60,7 @@ function RutaLogin({ children }) {
   return children;
 }
 
+// CORREGIDO: Ahora permite el acceso a admin, emprendedor y artesano
 function RutaAdmin({ children }) {
   const token = localStorage.getItem("token");
   const user = obtenerUsuario();
@@ -68,7 +69,8 @@ function RutaAdmin({ children }) {
     return <Navigate to="/login" replace />;
   }
 
-  if (user?.role !== "admin") {
+  const rol = user?.role;
+  if (rol !== "admin" && rol !== "emprendedor" && rol !== "artesano") {
     return <Navigate to="/inicio" replace />;
   }
 
@@ -257,7 +259,7 @@ function App() {
                   }
                 />
 
-                {/* MÓDULO ADMINISTRADOR */}
+                {/* MÓDULO ADMINISTRADOR / GESTIÓN DE PRODUCTOS */}
                 <Route
                   path="/admin"
                   element={

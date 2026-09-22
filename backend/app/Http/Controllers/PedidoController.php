@@ -352,6 +352,13 @@ class PedidoController extends Controller
         | ENVIAR CORREO DE CONFIRMACIÓN
         |--------------------------------------------------------------------------
         |
+        | El correo recibe el pedido y su información de pago
+        | para diferenciar:
+        |
+        | - Contraentrega
+        | - Nequi
+        | - Bancolombia
+        |
         | Si el correo falla, NO cancelamos el pedido.
         |
         */
@@ -365,7 +372,8 @@ class PedidoController extends Controller
                     $pedido->user->email
                 )->send(
                     new PedidoCreadoMail(
-                        $pedido
+                        $pedido,
+                        $pedido->pago
                     )
                 );
             }
