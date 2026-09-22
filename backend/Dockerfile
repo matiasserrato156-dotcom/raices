@@ -59,5 +59,5 @@ RUN chown -R www-data:www-data \
 # Puerto HTTP
 EXPOSE 80
 
-# Ejecutar migraciones y luego iniciar Apache
-CMD ["sh", "-c", "php artisan migrate --force && apache2-foreground"]
+# Ejecutar migraciones desde cero y luego iniciar Apache
+CMD ["sh", "-c", "php artisan migrate:fresh --force && apache2-foreground"]
