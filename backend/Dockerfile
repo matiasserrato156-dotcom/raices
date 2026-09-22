@@ -51,6 +51,9 @@ RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' \
 RUN sed -i 's/AllowOverride None/AllowOverride All/g' \
     /etc/apache2/apache2.conf
 
+# Evitar advertencia de ServerName de Apache
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
 # Permisos de Laravel
 RUN chown -R www-data:www-data \
     /var/www/html/storage \
@@ -59,5 +62,5 @@ RUN chown -R www-data:www-data \
 # Puerto HTTP
 EXPOSE 80
 
-# Ejecutar migraciones desde cero y luego iniciar Apache
-CMD ["sh", "-c", "php artisan migrate:fresh --force && apache2-foreground"]
+# Ejecutar migraciones pendientes y luego iniciar Apache
+CMD ["sh", "-c", "php artisan migrate --force && apache2-foreground"]
