@@ -33,18 +33,17 @@ function ForgotPassword() {
       );
 
       setEmail("");
-    } catch (error) {
-      console.error("Error al solicitar recuperación:", error);
+    } catch (err) {
+      console.error("Error al solicitar recuperación:", err);
 
-      if (error.response?.status === 422) {
+      if (err.response?.status === 422) {
         setError(
-          error.response.data.message ||
+          err.response.data.message ||
             "No pudimos procesar la solicitud."
         );
       } else {
         setError(
-          error.response.data.message ||
-            error.message ||
+          err.response?.data?.message ||
             "No se pudo conectar con el servidor."
         );
       }
