@@ -128,19 +128,28 @@ class AuthController extends Controller
             'email' => ['required', 'email'],
         ]);
 
-        $status = Password::sendResetLink(
-            $request->only('email')
-        );
+        try {
+            $status = Password::sendResetLink(
+                $request->only('email')
+            );
 
-        if ($status === Password::RESET_LINK_SENT) {
+            if ($status === Password::RESET_LINK_SENT) {
+                return response()->json([
+                    'message' => 'Hemos enviado un enlace para restablecer tu contraseña.',
+                ]);
+            }
+
             return response()->json([
-                'message' => 'Hemos enviado un enlace para restablecer tu contraseña.',
-            ]);
-        }
+                'message' => 'No pudimos enviar el enlace de recuperación.',
+                'status' => $status,
+            ], 422);
 
-        return response()->json([
-            'message' => 'No pudimos enviar el enlace de recuperación.',
-        ], 422);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'message' => 'Error al enviar el correo.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     public function resetPassword(Request $request)
