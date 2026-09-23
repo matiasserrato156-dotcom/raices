@@ -207,15 +207,19 @@ function AdminProductos() {
       return imagen;
     }
 
+    const backendURL = import.meta.env.PROD
+      ? "https://raices-backend-final.onrender.com"
+      : "http://127.0.0.1:8000";
+
     if (imagen.startsWith("/storage/")) {
-      return `http://127.0.0.1:8000${imagen}`;
+      return `${backendURL}${imagen}`;
     }
 
     if (imagen.startsWith("/")) {
-      return `http://127.0.0.1:8000${imagen}`;
+      return `${backendURL}${imagen}`;
     }
 
-    return `http://127.0.0.1:8000/storage/${imagen}`;
+    return `${backendURL}/storage/${imagen}`;
   };
 
   const formatearPrecio = (precio) => {
