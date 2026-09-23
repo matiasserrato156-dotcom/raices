@@ -38,6 +38,9 @@ RUN composer install \
     --optimize-autoloader \
     --no-interaction
 
+# Crear enlace público para las imágenes de Laravel
+RUN php artisan storage:link
+
 # Configurar Apache para Laravel
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 
